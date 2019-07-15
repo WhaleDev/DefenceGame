@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">LastDefence</string>
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="start">开始游戏</string>
+    <string name="help">游戏帮助</string>
+    <string name="aboutgame">关于游戏</string>
+    <string name="exit">退出游戏</string>
+
+
+    <string name="number1">1.第一关</string>
+    <string name="number2">2.第二关</string>
+    <string name="number3">3.第三关</string>
+    <string name="number4">4.第四关</string>
+    <string name="number5">5.第五关</string>
+    <string name="number6">6.第六关</string>
+    <string name="number7">7.第七关</string>
+    <string name="number8">8.第八关</string>
+    <string name="number9">9.第九关</string>
+    <string name="number10">10.第十关</string>
+
+    <string name="highpoint">记录：</string>
+    <string name="ys">您选择了</string>
+    <string name="about">关于</string>
+    <string name="set">设置</string>
+    <string name="yinxiao">音效</string>
+    <string name="yinyue">音乐</string>
+    <string name="huazhi">画质</string>
+
+    <string name="chakan">访问android市场</string>
+</resources>

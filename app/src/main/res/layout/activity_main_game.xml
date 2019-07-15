@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/main">
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@mipmap/start_button" />
+
+
+
+    <Button
+        android:id="@+id/buttonAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+       android:layout_below="@+id/buttonStart"
+        android:background="@mipmap/about_button"
+        />
+
+    <Button
+        android:id="@+id/buttonExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:layout_below="@+id/buttonAbout"
+        android:background="@mipmap/exit_button"
+        />
+
+</RelativeLayout>
