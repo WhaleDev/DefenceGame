@@ -11,7 +11,10 @@ public class Game {
     public int[] target = Map.target[mapNum];
 
 
-
+    /**
+     * 初始化game对象
+     * @param gp
+     */
     public Game(GameView gp)
     {
         this.gp=gp;

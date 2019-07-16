@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.lastdefence.constant.Constants;
 import com.example.lastdefence.master.MonsterList;
-import com.example.lastdefence.master.Monster_1;
+import com.example.lastdefence.master.Monsters;
 import com.example.lastdefence.view.GameView;
 
 public class CreateMonster extends Thread {
@@ -34,7 +34,7 @@ public class CreateMonster extends Thread {
 				}
 			}
 		}
-		//}
+
 		while(flag){
 			if(count<1){							//判断怪物数量
 				break;
@@ -42,31 +42,23 @@ public class CreateMonster extends Thread {
 			try{
 				if(!pause)
 				{
-					if(mv.boshu%Constants.CYCLE==1)	//第二波怪物的执行方法
+					if(mv.boshu%Constants.CYCLE==0)	//第1波怪物的执行方法
 					{
-
-						mv.drawStartDemo = true;//绘制怪物出现时的动画
-						list.add(new Monster_1(mv, Constants.MASTER1_BLOOD+(mv.boshu-1)*Constants.INCREASE_BLOOD1, creep));
+						list.add(new Monsters(mv, Constants.MASTER1_BLOOD+(mv.boshu-1)*Constants.INCREASE_BLOOD1, creep,30));
 						count--;
-
 					}
 
-					else if(mv.boshu%Constants.CYCLE== 2)//第三波怪物的执行方法
+					else if(mv.boshu%Constants.CYCLE== 1)//第2波怪物的执行方法
 					{
-
-						mv.drawStartDemo = true;//绘制怪物出现时的动画
-						list.add(new Monster_1(mv, Constants.MASTER1_BLOOD+(mv.boshu-1)*Constants.INCREASE_BLOOD1, creep));
+						list.add(new Monsters(mv, Constants.MASTER1_BLOOD+(mv.boshu-1)*Constants.INCREASE_BLOOD1, creep,30));
 						count--;
 
 
 					}
 
-					else if(mv.boshu%Constants.CYCLE== 0)//第一波怪物的执行方法
+					else if(mv.boshu%Constants.CYCLE== 2)//第3波怪物的执行方法
 					{
-
-
-						mv.drawStartDemo = true;//绘制怪物出现时的动画
-						list.add(new Monster_1(mv, Constants.MASTER1_BLOOD+(mv.boshu-1)*Constants.INCREASE_BLOOD1, creep));
+						list.add(new Monsters(mv, Constants.MASTER1_BLOOD+(mv.boshu-1)*Constants.INCREASE_BLOOD1, creep,40));
 						count--;
 
 

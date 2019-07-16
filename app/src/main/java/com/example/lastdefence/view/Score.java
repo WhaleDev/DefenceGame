@@ -7,6 +7,7 @@ import android.graphics.Paint;
 
 import com.example.lastdefence.R;
 import com.example.lastdefence.constant.Constants;
+import com.example.lastdefence.utils.Utils;
 
 public class Score
 {

@@ -7,6 +7,8 @@ public interface Monster {
 
     public void run(); //运动
 
-    public boolean isLive();
+    public boolean isLive();  //是否存活
+
+    public void bloodLoss();
 
 }

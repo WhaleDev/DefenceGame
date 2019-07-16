@@ -18,7 +18,6 @@ import com.example.lastdefence.game.Game;
 import com.example.lastdefence.game.LBX;
 import com.example.lastdefence.game.TowerAdd;
 import com.example.lastdefence.game.UpdateBitmap;
-import com.example.lastdefence.mapCapability.CapabilityList;
 import com.example.lastdefence.master.MonsterList;
 import com.example.lastdefence.threads.CreateMonster;
 import com.example.lastdefence.threads.DrawThread;
@@ -48,7 +47,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean playDongHua;         //开始动画
     public MonsterList master_list; //怪物列表封装了对怪物的各种操作
     public int boShuCount = Constants.MASTER_COUNT;
-    public boolean drawStartDemo = false; //绘制怪物出现时的动画
     public int points = getScore;     //积分
     public int life = 10; //生命值
 
@@ -82,6 +80,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Bitmap master1;
     Bitmap huiHe;
     Bitmap deFen;
+
+    public Bitmap backBlack;
+    public Bitmap gameOver;
+    public Bitmap levelScore;
+
 
     public boolean pao1Click = true;  //炮1按钮处在可点击状态
     public boolean pao2Click = true;
@@ -151,15 +154,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                             Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
                     pao1Click = false;
                 }
-
             }
 
         }
         paint.setStyle(Style.STROKE);
         canvas.drawBitmap(huiHe, Constants.PMX / 2 - 70, 0, paint);
-        score.drawSelf(canvas, paint, 2);
         canvas.drawBitmap(deFen, 0, 0, paint);
-        score.drawSelf(canvas, paint, 1);
+        score.drawSelf(canvas,paint,2);
+        score.drawSelf(canvas,paint,1);
+        score.drawSelf(canvas,paint,3);
+
+        if(gameisover){
+            canvas.drawBitmap(backBlack, 0,0, paint);
+            canvas.drawBitmap(gameOver, 368,176, paint);
+            canvas.drawBitmap(levelScore, 368,176+gameOver.getHeight()+20, paint);
+            score.drawSelf(canvas,paint,4);
+        }
 
         canvas.restore();
     }
@@ -199,11 +209,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 R.mipmap.monster1);
         huiHe = BitmapFactory.decodeResource(this.getResources(), R.mipmap.huihe);
         deFen = BitmapFactory.decodeResource(this.getResources(), R.mipmap.defen);
+        backBlack = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.backblack);
+        gameOver=BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.gameover);
+        levelScore = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.guanqiadefen);
         game = new Game(this);
         master_list = new MonsterList(this);
         tower_list = new TowerList();
         lbx = new LBX(road, this);
         ta = new TowerAdd(this);
+
+        score = new Score(this)	;
 
         if (this.boshu % 3 == 1)
             cm = new CreateMonster(master_list, this, creep_1);
@@ -244,7 +262,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         master_list.clear();
         tower_list.clear();
 
-        // ???run ?滭 ???
         cm.setFlag(false);
         mrt.setFlag(false);
         dmt.setFlag(false);

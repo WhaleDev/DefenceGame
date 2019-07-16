@@ -10,32 +10,30 @@ import com.example.lastdefence.game.LBX;
 import com.example.lastdefence.impleClass.Monster;
 import com.example.lastdefence.view.GameView;
 
-public class Monster_1 implements Monster {
+public class Monsters implements com.example.lastdefence.impleClass.Monster {
 
-    float totalBlood = Constants.MASTER1_BLOOD;
-    float nowBlood = Constants.MASTER1_BLOOD;
-    public GameView mv;
-    int x;  //起点
-    int y;
-    int nextX;
-    int nextY;
+    private float totalBlood;      //总生命值
+    private float nowBlood;        //当前生命值
+    private GameView mv;            //view对象
     public Paint paint;
-    public float currentPointX;  //记录当前怪的像素点
-    public float currentPointY;
-    boolean gameStart = true;
-    int bloodTime = 0;//血条存在的时间
+
+    private int x;  //起点的x，y坐标
+    private int y;
+    private int nextX;
+    private int nextY;
+    private float currentPointX;  //记录当前怪的像素点
+    private float currentPointY;
+
     public transient Bitmap creep;
-    public int mapNum;                      //地图编号
-    static int UNIT_SPEED = Constants.UNIT_SPEED;
-    int BScount = 20;
-    boolean currentRunning = true;
-    float pianyiX;
-    float pianyiY;//这里的偏移是怪从地图的一个点想另一个点行走时后的过度。“视觉上的流畅”
+    private int UNIT_SPEED;
+    private int BScount = 20;
+
+    private float pianyiX;
+    private float pianyiY;//这里的偏移是怪从地图的一个点想另一个点行走时后的过度。“视觉上的流畅”
 
 
-    public Monster_1(GameView mv, float totalBlood, Bitmap creep){
+    public Monsters(GameView mv, float totalBlood, Bitmap creep, int speed){
         this.mv = mv;
-        mapNum = mv.mapNum;
         this.totalBlood = totalBlood;
         this.nowBlood = totalBlood;
         this.creep = creep;
@@ -46,8 +44,7 @@ public class Monster_1 implements Monster {
         paint = new Paint();
         currentPointX = LBX.getPosition(y, x)[0]; //当前X,y像素位置（方法参数为此）
         currentPointY = LBX.getPosition(y, x)[1];
-
-
+        this.UNIT_SPEED = speed;
     }
 
     boolean live = true;
@@ -56,7 +53,7 @@ public class Monster_1 implements Monster {
      */
     @Override
     public void draw(Canvas canvas) {
-        if (gameStart){
+        if (mv.isPlay&&Map.MAP_DATA[mv.mapNum][y][x]!=5){
             canvas.drawBitmap(creep, currentPointX-creep.getWidth()/2,
                     currentPointY-creep.getHeight()/2, paint);
 
@@ -67,7 +64,7 @@ public class Monster_1 implements Monster {
 
     @Override
     public void run() {
-        if(gameStart){
+        if(mv.isPlay&&mv.life>0){
 
             if(BScount>=UNIT_SPEED){
                 BScount = 0;
@@ -81,6 +78,9 @@ public class Monster_1 implements Monster {
                     case 2: nextY++;break;
                     case 3: nextX--;break;
                     case 4: nextY--;break;
+                    case 5: live = false;
+                            mv.life--;
+                            break;
                 }
 
             }
@@ -94,12 +94,19 @@ public class Monster_1 implements Monster {
                 currentPointY = p1[1]+pianyiY;
 
                 BScount++;
-            }
+            }else if(mv.life==0){
+            mv.gameisover = true;
+        }
 
         }
 
+    /**
+     *  怪物被子弹击中减少血量
+     */
+    @Override
+    public void bloodLoss() {
 
-
+    }
 
     @Override
     public boolean isLive() {

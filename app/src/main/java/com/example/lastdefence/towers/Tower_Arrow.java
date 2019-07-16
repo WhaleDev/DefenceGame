@@ -24,7 +24,7 @@ public class Tower_Arrow implements Tower{ //实现接口序列化箭塔对象�
     private   Bitmap bitmap;
     GameView mv;
     Paint paint;
-//    public ArrayList<Monster> master_list;
+//    public ArrayList<Monsters> master_list;
     private float yAngle;
 //    public BulletList bulletList = new BulletList();//子弹列表
     private int limitCount = 20;//防止子弹发射过快
