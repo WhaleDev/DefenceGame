@@ -19,6 +19,7 @@ import com.example.lastdefence.game.LBX;
 import com.example.lastdefence.game.TowerAdd;
 import com.example.lastdefence.game.UpdateBitmap;
 import com.example.lastdefence.master.MonsterList;
+import com.example.lastdefence.threads.BulletRunThread;
 import com.example.lastdefence.threads.CreateMonster;
 import com.example.lastdefence.threads.DrawThread;
 import com.example.lastdefence.threads.MonsterRunThread;
@@ -28,6 +29,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     protected boolean threadFlag;//线程标志
     DrawThread dmt;//绘制怪物线程
     MonsterRunThread mrt;//怪物运动线程
+    public BulletRunThread tft;//子弹运动线程
     StartGameActivity activity;
 
     public Paint paint;       //画笔
@@ -84,6 +86,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public Bitmap backBlack;
     public Bitmap gameOver;
     public Bitmap levelScore;
+    public Bitmap bulletShell;
 
 
     public boolean pao1Click = true;  //炮1按钮处在可点击状态
@@ -166,8 +169,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if(gameisover){
             canvas.drawBitmap(backBlack, 0,0, paint);
-            canvas.drawBitmap(gameOver, 368,176, paint);
-            canvas.drawBitmap(levelScore, 368,176+gameOver.getHeight()+20, paint);
+            canvas.drawBitmap(gameOver, 268,76, paint);
+            canvas.drawBitmap(levelScore, 268,76+gameOver.getHeight()+20, paint);
             score.drawSelf(canvas,paint,4);
         }
 
@@ -215,10 +218,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 R.mipmap.gameover);
         levelScore = BitmapFactory.decodeResource(this.getResources(),
                 R.mipmap.guanqiadefen);
+        bulletShell=BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.bullet_shell);
         game = new Game(this);
         master_list = new MonsterList(this);
         tower_list = new TowerList();
         lbx = new LBX(road, this);
+        tft = new BulletRunThread(tower_list);
         ta = new TowerAdd(this);
 
         score = new Score(this)	;
@@ -232,6 +238,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         cm.start();
         boShuCount = Constants.MASTER_COUNT;
+
+
 
         mrt = new MonsterRunThread(this);
         mrt.start();
@@ -265,11 +273,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         cm.setFlag(false);
         mrt.setFlag(false);
         dmt.setFlag(false);
+        tft.setFlag(false);
 
         try {
             dmt.join();
             mrt.join();
             cm.join();
+            tft.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

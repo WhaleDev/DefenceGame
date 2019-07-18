@@ -7,13 +7,15 @@ import android.view.MotionEvent;
 
 import com.example.lastdefence.constant.Constants;
 import com.example.lastdefence.impleClass.Tower;
+import com.example.lastdefence.threads.BulletRunThread;
 import com.example.lastdefence.towers.TowerList;
-import com.example.lastdefence.towers.Tower_Arrow;
+import com.example.lastdefence.towers.TowerArrow;
 import com.example.lastdefence.view.GameView;
 
 public class TowerAdd {
     //serialization提供了一种持久化对象实例的机制,
     // 为了在一个特定对象的一个域上关闭serialization，可以在这个域前加上关键字transient
+    transient BulletRunThread tft;
     transient GameView mv;
     int tower_draw = 0; //绘制塔的按钮，0为不画，1234代表不同塔
     float[] position_botton = new float[2]; //根据屏幕坐标得到缩放前的坐标
@@ -30,6 +32,7 @@ public class TowerAdd {
     transient Bitmap tower4;
     transient Bitmap red_put;
 
+    boolean firstAddTower=true;
     boolean flagMove = true; //是否移动标识
     boolean isDown = false;  //按下
     boolean putRed = false; //判断是否可放塔
@@ -54,6 +57,7 @@ public class TowerAdd {
         game =mySurfaceView.game;
         paint = new Paint();
         paint.setAntiAlias(true); //抗锯齿方法
+        tft = mySurfaceView.tft;
 
     }
 
@@ -125,12 +129,16 @@ public class TowerAdd {
                         switch (tower_draw){
                             case 1:
                                 if(mv.getScore>= Constants.PUTTOWER1CONSUMESCORE){
-                                    tower_list.add(new Tower_Arrow(temp1[0], temp1[1],  tower1, mv));
+                                    tower_list.add(new TowerArrow(temp1[0], temp1[1],  tower1, mv));
                                     mv.getScore -= Constants.PUTTOWER1CONSUMESCORE;
                                     setCurrentMap(temp[0], temp[1]);
                                 }
                                 break;
 
+                        }
+                        if(firstAddTower ){
+                            tft.start();
+                            firstAddTower=false;
                         }
                     }
                     flagMove = true;

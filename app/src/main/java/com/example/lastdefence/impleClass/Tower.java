@@ -2,26 +2,31 @@ package com.example.lastdefence.impleClass;
 
 import android.graphics.Canvas;
 
+import com.example.lastdefence.bullet.BulletList;
+
 public interface Tower{
     public void draw(Canvas canvas);
+
     public float[] getXY();
 
     public float getR();
 
-//    public void findMaster();
+    public void fire(Monster a);
 
-//    public void findJD(float x,float y) ;
+    public void findMaster();
 
-//    public BulletList getBullet();
+    public void findJD(float x,float y) ;
 
-   // public int[] getRowCol();
+    public BulletList getBullet();
 
-    //public int getCurrentState();
+    public int[] getRowCol();
+
+    public int getCurrentState();
 
     //跑自己升级的方法
-//    public void upDateSelf();
+    public void upDateSelf();
     //炮卖掉自己
- //   public void sell();
+    public void sell();
 
- //   public int getCurrentUpdatePrice();
+    public int getCurrentUpdatePrice();
 }

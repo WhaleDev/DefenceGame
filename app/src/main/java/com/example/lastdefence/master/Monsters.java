@@ -4,10 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.example.lastdefence.constant.Constants;
 import com.example.lastdefence.constant.Map;
 import com.example.lastdefence.game.LBX;
-import com.example.lastdefence.impleClass.Monster;
 import com.example.lastdefence.view.GameView;
 
 public class Monsters implements com.example.lastdefence.impleClass.Monster {
@@ -100,17 +98,32 @@ public class Monsters implements com.example.lastdefence.impleClass.Monster {
 
         }
 
+    @Override
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    @Override
+    public float[] getCurrentPoint() {
+        return new float[]{currentPointX,currentPointY};
+    }
+
     /**
      *  怪物被子弹击中减少血量
      */
     @Override
-    public void bloodLoss() {
-
+    public boolean decreaseBlood(float damage) {
+        if(nowBlood>=0){
+            nowBlood-=damage;
+        }else {
+//处理当前血量小于0
+        }
+        return true;
     }
 
     @Override
-    public boolean isLive() {
 
+    public boolean isLive() {
         return live;
     }
 }

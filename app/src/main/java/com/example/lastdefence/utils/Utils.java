@@ -3,6 +3,8 @@ package com.example.lastdefence.utils;
 * 封装一些方法供其他类调用
 * */
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Build;
 import android.view.View;
 
@@ -19,5 +21,17 @@ public class Utils {
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
+    }
+
+    public  static Bitmap small(Bitmap bmp, float scale)    {
+        int bmpWidth=bmp.getWidth();
+        int bmpHeight=bmp.getHeight();
+        /* 产生reSize后的Bitmap对象 */
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        Bitmap resizeBmp = Bitmap.createBitmap(bmp,0,0,bmpWidth,
+                bmpHeight,matrix,true);
+        return resizeBmp;
+
     }
 }

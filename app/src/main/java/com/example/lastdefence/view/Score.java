@@ -73,8 +73,8 @@ public class Score
 			else if(num == 3)
 				canvas.drawBitmap(numbers[c-'0'], mv.lbx.temp3[0]-allWidth/2+i*width, mv.lbx.temp3[1]-alength/2, paint);
 			else if(num == 4){
-//				Bitmap bitmapt = Utils.small(numbers[c-'0'], 2);
-//				canvas.drawBitmap(bitmapt, 176+mv.gameOver.getWidth()+10+i*width*2,368+mv.gameOver.getHeight()+20+mv.gameOver.getHeight()/2-13, paint);
+				Bitmap bitmapt = Utils.small(numbers[c-'0'], 3);
+				canvas.drawBitmap(bitmapt, 268+mv.gameOver.getWidth()+10+i*width*2,76+mv.gameOver.getHeight()+20+mv.gameOver.getHeight()/2-13, paint);
 			}
 		}
 	}

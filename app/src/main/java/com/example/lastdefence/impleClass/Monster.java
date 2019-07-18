@@ -9,6 +9,11 @@ public interface Monster {
 
     public boolean isLive();  //是否存活
 
-    public void bloodLoss();
+    public boolean decreaseBlood(float damage);
+
+    public float[] getCurrentPoint();
+
+    public void setLive(boolean live);
+
 
 }
