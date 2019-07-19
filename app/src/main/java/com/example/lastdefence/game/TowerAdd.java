@@ -128,9 +128,9 @@ public class TowerAdd {
                         float[] temp1 = LBX.getPosition(temp[0],temp[1]); //屏幕坐标
                         switch (tower_draw){
                             case 1:
-                                if(mv.getScore>= Constants.PUTTOWER1CONSUMESCORE){
+                                if(mv.coin >= Constants.PUTTOWER1CONSUMECOIN){
                                     tower_list.add(new TowerArrow(temp1[0], temp1[1],  tower1, mv));
-                                    mv.getScore -= Constants.PUTTOWER1CONSUMESCORE;
+                                    mv.coin -= Constants.PUTTOWER1CONSUMECOIN;
                                     setCurrentMap(temp[0], temp[1]);
                                 }
                                 break;

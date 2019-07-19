@@ -42,14 +42,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean threadIsDie = false;//判断线程是否在运行
     public int mapNum;         //地图编号
     public CreateMonster cm;//生成怪物线程
-    public int getScore = 150;        //开始积分
+    public int coin = 150;        //总金钱
     public int totalScore = 0;          //总积分
     public int boshu = 1;             //怪物波数
     public float shanXingjiao = 0;     //扇形角
     public boolean playDongHua;         //开始动画
     public MonsterList master_list; //怪物列表封装了对怪物的各种操作
     public int boShuCount = Constants.MASTER_COUNT;
-    public int points = getScore;     //积分
     public int life = 10; //生命值
 
     public boolean isPlay = true; // 标记游戏运行状态
@@ -148,7 +147,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         ta.draw(canvas);   //移动过程中绘制塔
         tower_list.draw(canvas);
         if (!gameisover) {
-            if (getScore >= Constants.PUTTOWER1CONSUMESCORE && !isPressOnTower) {
+            if (coin >= Constants.PUTTOWER1CONSUMECOIN && !isPressOnTower) {
                 canvas.drawBitmap(button_0, Constants.BUTTON_TOWER_POSITION_X, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
                 pao1Click = true;
             } else {
@@ -158,6 +157,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     pao1Click = false;
                 }
             }
+
+        }
+        if(life<=0&&dmt!=null&&mrt!=null&&tft!=null){
+            dmt.setFlag(false);
+            mrt.setFlag(false);
+            tft.setFlag(false);
 
         }
         paint.setStyle(Style.STROKE);

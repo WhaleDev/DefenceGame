@@ -52,7 +52,7 @@ public class MonsterList extends ArrayList<Monster> {
             }
             Monster master = this.get(i);
             master.run();
-            if(!master.isLive()){
+            if(!master.isMonstersLive()){
                 this.remove(master);
             }
         }

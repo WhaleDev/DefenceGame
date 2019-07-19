@@ -13,10 +13,10 @@ public class Constants {
     public static float RADIO = 1.0f;
 
     public static final int TO_GAME_VIEW = 7;
-    public static final int PUTTOWER1CONSUMESCORE = 5;
-    public static final int PUTTOWER2CONSUMESCORE = 25;
-    public static final int PUTTOWER3CONSUMESCORE = 35;
-    public static final int PUTTOWER4CONSUMESCORE = 50;
+    public static final int PUTTOWER1CONSUMECOIN = 15;
+    public static final int PUTTOWER2CONSUMECOIN = 25;
+    public static final int PUTTOWER3CONSUMECOIN = 35;
+    public static final int PUTTOWER4CONSUMECOIN = 50;
 
 
     public static final int BUTTON_TOWER_LENGTH = 80;
@@ -48,6 +48,11 @@ public class Constants {
     public static int BULLETNUMBER3DAMAGE [] = new int[]{20,40,60,80};
     public static int BULLETNUMBER4DAMAGE [] = new int[]{2,4,6,8} ;
 
+
+    //杀死不同的怪所得到的分数
+    public static final int KILLMASTER1GETSCORE = 5;
+    public static final int KILLMASTER2GETSCORE = 10;
+    public static final int KILLMASTER3GETSCORE = 20;
 
     //怪的血量
     public static int MASTER1_BLOOD = 30;

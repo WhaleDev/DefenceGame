@@ -61,13 +61,13 @@ public class BulletArrow implements Bullet {
 
     @Override
     public void run() {
-        if(monster.isLive()){
+        if(monster.isMonstersLive()){
             float xspan = monster.getCurrentPoint()[0]-currentX;
             float yspan = monster.getCurrentPoint()[1]-currentY;
             if(xspan*xspan+yspan*yspan<20){
                 live = false;
                 if(!monster.decreaseBlood(damage)){
-                   monster.setLive(false);
+                   monster.setMonstersLive(false);
                 }
                 return;
             }

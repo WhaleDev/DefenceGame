@@ -48,11 +48,12 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
     }
     @Override
     public void draw(Canvas canvas){
-        Matrix m1=new Matrix();
-        m1.setTranslate(x-bitmap.getWidth()/2,y-bitmap.getHeight()/2);
-        m1.preRotate(yAngle, bitmap.getWidth()/2, bitmap.getHeight()/2);
-        canvas.drawBitmap(bitmap, m1,null);
-        bulletList.draw(canvas);
+            Matrix m1=new Matrix();
+            m1.setTranslate(x-bitmap.getWidth()/2,y-bitmap.getHeight()/2);
+            m1.preRotate(yAngle, bitmap.getWidth()/2, bitmap.getHeight()/2);
+            canvas.drawBitmap(bitmap, m1,null);
+            bulletList.draw(canvas);
+
    }
     //返回塔的中心点坐标
     @Override
@@ -67,7 +68,7 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
 
     @Override
     public void fire(Monster a) {
-        if(limitCount%Constants.TOWER1_SHOOTTIME==0 && a.isLive() ) //减小发射速度
+        if(limitCount%Constants.TOWER1_SHOOTTIME==0 && a.isMonstersLive() ) //减小发射速度
         {
 
             bulletList.add(new BulletArrow((float)(x+24*Math.cos(Math.PI*yAngle/180)),
@@ -84,7 +85,7 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
         for(int i=0; i<monster_list.size(); i++){
             Monster a = monster_list.get(i);
             float[] point = a.getCurrentPoint();
-            if((point[0]-x)*(point[0]-x)+(point[1]-y)*(point[1]-y)<shotR*shotR&&a.isLive()){
+            if((point[0]-x)*(point[0]-x)+(point[1]-y)*(point[1]-y)<shotR*shotR&&a.isMonstersLive()){
                 al.add(a);
             }
         }

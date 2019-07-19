@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.lastdefence.constant.Constants;
 import com.example.lastdefence.constant.Map;
 import com.example.lastdefence.game.LBX;
 import com.example.lastdefence.view.GameView;
@@ -29,6 +30,7 @@ public class Monsters implements com.example.lastdefence.impleClass.Monster {
     private float pianyiX;
     private float pianyiY;//这里的偏移是怪从地图的一个点想另一个点行走时后的过度。“视觉上的流畅”
 
+    boolean monstersLive = true;
 
     public Monsters(GameView mv, float totalBlood, Bitmap creep, int speed){
         this.mv = mv;
@@ -45,7 +47,7 @@ public class Monsters implements com.example.lastdefence.impleClass.Monster {
         this.UNIT_SPEED = speed;
     }
 
-    boolean live = true;
+
     /*
      绘制单个怪物以及血条
      */
@@ -54,10 +56,7 @@ public class Monsters implements com.example.lastdefence.impleClass.Monster {
         if (mv.isPlay&&Map.MAP_DATA[mv.mapNum][y][x]!=5){
             canvas.drawBitmap(creep, currentPointX-creep.getWidth()/2,
                     currentPointY-creep.getHeight()/2, paint);
-
         }
-
-
     }
 
     @Override
@@ -76,7 +75,7 @@ public class Monsters implements com.example.lastdefence.impleClass.Monster {
                     case 2: nextY++;break;
                     case 3: nextX--;break;
                     case 4: nextY--;break;
-                    case 5: live = false;
+                    case 5: monstersLive = false;
                             mv.life--;
                             break;
                 }
@@ -99,8 +98,8 @@ public class Monsters implements com.example.lastdefence.impleClass.Monster {
         }
 
     @Override
-    public void setLive(boolean live) {
-        this.live = live;
+    public void setMonstersLive(boolean monstersLive) {
+        this.monstersLive = monstersLive;
     }
 
     @Override
@@ -116,14 +115,17 @@ public class Monsters implements com.example.lastdefence.impleClass.Monster {
         if(nowBlood>=0){
             nowBlood-=damage;
         }else {
-//处理当前血量小于0
+                mv.totalScore+= Constants.KILLMASTER1GETSCORE;
+                mv.coin+=Constants.KILLMASTER1GETSCORE;
+                return false;
+
+
         }
         return true;
     }
 
     @Override
-
-    public boolean isLive() {
-        return live;
+    public boolean isMonstersLive() {
+        return monstersLive;
     }
 }

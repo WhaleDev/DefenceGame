@@ -45,8 +45,8 @@ public class Score
 		String scoreStr = null;
 		if(num == 1)
 		{
-			scoreStr=mv.getScore+"";
-			mv.points = mv.getScore;
+			scoreStr=mv.coin +"";
+
 		}
 		else if(num == 2)
 		{
