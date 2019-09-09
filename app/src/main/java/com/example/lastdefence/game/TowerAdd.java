@@ -5,7 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
+import com.example.lastdefence.allActivity.MainGameActivity;
 import com.example.lastdefence.constant.Constants;
+import com.example.lastdefence.constant.Map;
 import com.example.lastdefence.impleClass.Tower;
 import com.example.lastdefence.threads.BulletRunThread;
 import com.example.lastdefence.towers.TowerList;
@@ -67,12 +69,15 @@ public class TowerAdd {
        //Log.i("点击事件","x="+x+" y="+y);
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-               if (mv.isPlay&& x<((Constants.BUTTON_TOWER_POSITION_X+Constants.BUTTON_TOWER_LENGTH)*Constants.RADIO+Constants.LOX)
+                //第一座塔
+                if (!mv.cm.pause
+                       && x<((Constants.BUTTON_TOWER_POSITION_X+Constants.BUTTON_TOWER_LENGTH)*Constants.RADIO+Constants.LOX)
                        && x>((Constants.BUTTON_TOWER_POSITION_X)*Constants.RADIO+Constants.LOX)
                        && y>((Constants.PMY-Constants.BUTTON_TOWER_LENGTH)*Constants.RADIO+Constants.LOY)
                        && y<((Constants.PMY)*Constants.RADIO+Constants.LOY)
                        &&mv.pao1Click
-                       && !mv.isPressOnTower)
+                       && !mv.isPressOnTower
+                       && !mv.isDrawMenu)
                {
                    flagMove=false;
                    isDown =true;
@@ -81,8 +86,102 @@ public class TowerAdd {
                    move_Button[0]=event.getX();
                    move_Button[1]=event.getY();
                    tower_draw = 1;
+               } //第二座塔
+                if (!mv.cm.pause
+                        && x<((Constants.BUTTON_TOWER_POSITION_X+Constants.BUTTON_TOWER_LENGTH)*2*Constants.RADIO+Constants.LOX)
+                        && x>((Constants.BUTTON_TOWER_POSITION_X*2+Constants.BUTTON_TOWER_LENGTH)*Constants.RADIO+Constants.LOX)
+                        && y>((Constants.PMY-Constants.BUTTON_TOWER_LENGTH)*Constants.RADIO+Constants.LOY)
+                        && y<((Constants.PMY)*Constants.RADIO+Constants.LOY)
+                        &&mv.pao2Click
+                        && !mv.isPressOnTower
+                        && !mv.isDrawMenu)
+                {
+                    flagMove=false;
+                    isDown =true;
+                    position_botton[0]=event.getX()/Constants.RADIO-Constants.LOX;
+                    position_botton[1]=event.getY()/Constants.RADIO-Constants.LOY;
+                    move_Button[0]=event.getX();
+                    move_Button[1]=event.getY();
+                    tower_draw = 1;
+                } //第三座塔
+                if (!mv.cm.pause
+                        && x<((Constants.BUTTON_TOWER_POSITION_X+Constants.BUTTON_TOWER_LENGTH)*3*Constants.RADIO+Constants.LOX)
+                        && x>((Constants.BUTTON_TOWER_POSITION_X*3+Constants.BUTTON_TOWER_LENGTH*2)*Constants.RADIO+Constants.LOX)
+                        && y>((Constants.PMY-Constants.BUTTON_TOWER_LENGTH)*Constants.RADIO+Constants.LOY)
+                        && y<((Constants.PMY)*Constants.RADIO+Constants.LOY)
+                        &&mv.pao3Click
+                        && !mv.isPressOnTower
+                        && !mv.isDrawMenu)
+                {
+                    flagMove=false;
+                    isDown =true;
+                    position_botton[0]=event.getX()/Constants.RADIO-Constants.LOX;
+                    position_botton[1]=event.getY()/Constants.RADIO-Constants.LOY;
+                    move_Button[0]=event.getX();
+                    move_Button[1]=event.getY();
+                    tower_draw = 1;
+                }
+                /*
+                 *塔售卖
+                 */
+                else if(!mv.cm.pause
+                        && x<(2*Constants.PMX/4+mv.towerSell.getWidth()+Constants.LOX)*Constants.RADIO
+                       && x>(2*Constants.PMX/4+Constants.LOX) *Constants.RADIO
+                       && y<(Constants.PMY+Constants.LOY)*Constants.RADIO
+                       && y >(Constants.PMY-mv.towerSell.getHeight()+Constants.LOY)*Constants.RADIO
+                       &&mv.isPressOnTower
+                       && !mv.isDrawMenu)
+               {
+                   mv.update.sell(t);
+                   game.map_tower[t.getRowCol()[0]][t.getRowCol()[1]] = 0;
+                   mv.tower_list.remove(t);
                }
-
+                /**
+                 * 塔升级
+                 */
+                else if(!mv.cm.pause && x<(Constants.PMX/4+mv.towerUpgrade.getWidth()+Constants.LOX)*Constants.RADIO
+                        && x>(Constants.PMX/4+Constants.LOX) *Constants.RADIO
+                        && y<(Constants.PMY+Constants.LOY)*Constants.RADIO
+                        && y >(Constants.PMY-mv.towerUpgrade.getHeight()+Constants.LOY)*Constants.RADIO
+                        &&mv.isPressOnTower
+                        && !mv.isDrawMenu)
+                {
+                    mv.update.upDateTower(t);
+                }
+                mv.isPressOnTower = false;
+                /**
+                 * 暂停
+                 */
+                if(x<(Constants.PMX+Constants.LOX)*Constants.RADIO
+                        && x>(Constants.PMX - mv.pause.getWidth()+Constants.LOX) *Constants.RADIO
+                        && y<(mv.pause.getHeight()+Constants.LOY)*Constants.RADIO
+                        && y >(0+Constants.LOY)*Constants.RADIO
+                )
+                {
+                    //暂停按钮
+                    mv.pauseOrContinueThreads();
+                }
+                int[] rrll = LBX.getRowcol(event.getX()/Constants.RADIO-Constants.LOX, event.getY()/Constants.RADIO-Constants.LOY);
+                if(!mv.cm.pause && rrll[0]>=0 && rrll[0]<= Map.MAP_DATA[0].length && rrll[1]>=0 && rrll[1]<=Map.MAP_DATA[0][0].length)
+                {
+                    for(int i=0;i<mv.tower_list.size();i++)
+                    {
+                        t = mv.tower_list.get(i);
+                        int[] rowCol = t.getRowCol();
+                        if(rowCol[0]==rrll[0] && rowCol[1]==rrll[1])
+                        {
+                            realRowCol[0] = rowCol[0];
+                            realRowCol[1] = rowCol[1];
+                            mv.isPressOnTower = true;
+                            if(t.getCurrentState()<=3 && t.getCurrentUpdatePrice()<=mv.coin){
+                                mv.canUpgrade = true;
+                            }else {
+                                mv.canUpgrade = false;
+                            }
+                            break;
+                        }
+                    }
+                }
 
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -167,6 +266,11 @@ public class TowerAdd {
                 canvas.drawBitmap(Bitmap.createBitmap(tower1, 0, 0, 48, 48),
                         move_Button[0]-Bitmap.createBitmap(tower1, 0, 0, 48, 48).getWidth()/2,
                         move_Button[1]-Bitmap.createBitmap(tower1, 0, 0, 48, 48).getHeight()/2, paint);
+                break;
+            case 2:
+                canvas.drawBitmap(Bitmap.createBitmap(tower2, 0, 0, 48, 48),
+                        move_Button[0]-Bitmap.createBitmap(tower2, 0, 0, 48, 48).getWidth()/2,
+                        move_Button[1]-Bitmap.createBitmap(tower2, 0, 0, 48, 48).getHeight()/2, paint);
                 break;
         }
 

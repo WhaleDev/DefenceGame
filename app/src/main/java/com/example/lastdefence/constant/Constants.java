@@ -32,7 +32,7 @@ public class Constants {
     //tower4
     public static int[] TOWER4CURRENTPRICE = new int[]{25,30,35,40};
 
-    public static final int[] TOWER1_R = new int[]{200,120,140,160};
+    public static final int[] TOWER1_R = new int[]{80,120,140,160};
     public static final int[] TOWER2_R = new int[]{80,140,160,180};
     public static final int[] TOWER3_R = new int[]{80,140,160,180};
     public static final int[] TOWER4_R = new int[]{40,50,60,70};
@@ -41,6 +41,12 @@ public class Constants {
     public static final int TOWER2_SHOOTTIME =15;
     public static final int TOWER4_SHOOTTIME =40;
     public static final int TOWER3_SHOOTTIME =25;
+
+    //炮升级所需的钱数
+    public static int[] UPDATETOWER1 = new int[]{0,15,40,70};
+    public static int[] UPDATETOWER2 = new int[]{0,50,100,240};
+    public static int[] UPDATETOWER3 = new int[]{0,60,100,240};
+    public static int[] UPDATETOWER4 = new int[]{0,75,100,240};
 
     //子弹的伤害
     public static int BULLETNUMBER1DAMAGE[] = new int[]{10,20,30,40};

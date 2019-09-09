@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
+import com.example.lastdefence.allActivity.MainGameActivity;
 import com.example.lastdefence.bullet.BulletArrow;
 import com.example.lastdefence.bullet.BulletList;
 import com.example.lastdefence.constant.Constants;
@@ -155,18 +156,98 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
         return currentState;
     }
 
+    //画扇型的动画
+    public void DrawShanXing()
+    {
+        while(true)
+        {
+            playDongHua = true;
+            shanXingAngle = shanXingAngle + 5;
+            Constants.sleep(10);
+            if(shanXingAngle>=360)
+            {
+                shanXingAngle = 0;
+                break;
+            }
+        }
+    }
+
     @Override
     public void upDateSelf() {
+        switch(currentState)
+        {
+            case 1:
+                //判断升级所需的钱数是否够用
+                if(mv.coin>=Constants.UPDATETOWER1[1])//此处的数字要写在常量列里面
+                {
+                    //休息几秒钟有一个升级的过程,换图
+                    DrawShanXing();
+                    playDongHua = false;
+                    bitmap = bitmap.createBitmap(all, 48, 0, 48, 48);
+                    currentState = currentState + 1;
+                    currentPrice = Constants.TOWER1CURRENTPRICE[currentState-1];
+                    shotR = Constants.TOWER1_R[currentState-1];//将射击的范围变大，伤害变大
+                    mv.coin -= Constants.UPDATETOWER1[1];
+                    //原先的类里面fire方法要重新改写一下，根据当前的状态子弹的数量增加
+                }
+                else
+                {
+                    mv.canUpgrade = false;
+                }
+                break;
+            case 2:
+                //判断升级所需的钱数是否够用
+                if(mv.coin>=Constants.UPDATETOWER1[2])//此处的数字要写在常量列里面
+                {
+                    //休息几秒钟有一个升级的过程,换图
+                    DrawShanXing();
+                    playDongHua = false;
+                    bitmap = bitmap.createBitmap(all, 96, 0, 48, 48);
+                    currentState = currentState + 1;
+                    mv.coin -= Constants.UPDATETOWER1[2];
+                    currentPrice = Constants.TOWER1CURRENTPRICE[currentState-1];
+                    shotR = Constants.TOWER1_R[currentState-1];//将射击的范围变大，伤害变大
+                    //原先的类里面fire方法要重新改写一下，根据当前的状态子弹的数量增加
+                }
+                else
+                {
+                    mv.canUpgrade = false;
+                }
+                break;
+            case 3:
+                //判断升级所需的钱数是否够用
+                if(mv.coin>=Constants.UPDATETOWER1[3])//此处的数字要写在常量列里面
+                {
+                    //休息几秒钟有一个升级的过程,换图
+                    DrawShanXing();
+                    playDongHua = false;
+                    bitmap = bitmap.createBitmap(all, 144, 0, 48, 48);
+                    currentState = currentState + 1;
+                    mv.coin -= Constants.UPDATETOWER1[3];
+                    currentPrice = Constants.TOWER1CURRENTPRICE[currentState-1];
+                    shotR = Constants.TOWER1_R[currentState-1];//将射击的范围变大，伤害变大
+                    //原先的类里面fire方法要重新改写一下，根据当前的状态子弹的数量增加
+                }
+                else
+                {
+                    mv.canUpgrade = false;
+                }
+                break;
+            case 4 :
+                //写一句话，不可以升级了，已经是最高级别的了
+
+                break;
+        }
 
     }
 
     @Override
     public void sell() {
-
+        mv.coin += Constants.TOWER1CURRENTPRICE[currentState-1];
     }
 
     @Override
     public int getCurrentUpdatePrice() {
-        return 0;
+        return Constants.UPDATETOWER1[currentState];
     }
 }

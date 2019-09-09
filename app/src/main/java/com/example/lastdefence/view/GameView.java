@@ -17,6 +17,7 @@ import com.example.lastdefence.constant.Constants;
 import com.example.lastdefence.game.Game;
 import com.example.lastdefence.game.LBX;
 import com.example.lastdefence.game.TowerAdd;
+import com.example.lastdefence.game.Update;
 import com.example.lastdefence.game.UpdateBitmap;
 import com.example.lastdefence.master.MonsterList;
 import com.example.lastdefence.threads.BulletRunThread;
@@ -38,6 +39,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public Game game;           //怪物在地图上行走相关
     public Score score;        //绘制分数
+    public Update update;
     public ScreenScaleResult screenScaleResult;
     public boolean threadIsDie = false;//判断线程是否在运行
     public int mapNum;         //地图编号
@@ -55,6 +57,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean gameisover = false;  //判断游戏是否结束
     public boolean isPressOnTower = false; //炮的点击状态
     public boolean isDrawMenu = false;//菜单状态
+    public boolean canUpgrade = true; //判断是否可以升级
     public TowerAdd ta;       //造塔
 
     public Bitmap creep_1;
@@ -86,6 +89,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public Bitmap gameOver;
     public Bitmap levelScore;
     public Bitmap bulletShell;
+
+    public Bitmap towerSell;
+    public Bitmap towerUpgrade;
+    public Bitmap pause;         //点击游戏暂停
+    public Bitmap continuePlay;  //点击继续游戏
+
 
 
     public boolean pao1Click = true;  //炮1按钮处在可点击状态
@@ -146,6 +155,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ta.draw(canvas);   //移动过程中绘制塔
         tower_list.draw(canvas);
+        //绘制塔按钮
         if (!gameisover) {
             if (coin >= Constants.PUTTOWER1CONSUMECOIN && !isPressOnTower) {
                 canvas.drawBitmap(button_0, Constants.BUTTON_TOWER_POSITION_X, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
@@ -153,6 +163,27 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             } else {
                 if (!isPressOnTower) {
                     canvas.drawBitmap(UpdateBitmap.liangDu(button_0, 0.4f), Constants.BUTTON_TOWER_POSITION_X,
+                            Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
+                    pao1Click = false;
+                }
+            }
+            if (coin >= Constants.PUTTOWER2CONSUMECOIN && !isPressOnTower) {
+                canvas.drawBitmap(button_1, button_0.getWidth()+Constants.BUTTON_TOWER_POSITION_X*2, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
+                pao1Click = true;
+            } else {
+                if (!isPressOnTower) {
+                    canvas.drawBitmap(UpdateBitmap.liangDu(button_1, 0.4f), button_0.getWidth()+Constants.BUTTON_TOWER_POSITION_X*2,
+                            Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
+                    pao1Click = false;
+                }
+            }
+
+            if (coin >= Constants.PUTTOWER3CONSUMECOIN && !isPressOnTower) {
+                canvas.drawBitmap(button_2, button_0.getWidth()*2+Constants.BUTTON_TOWER_POSITION_X*3, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
+                pao1Click = true;
+            } else {
+                if (!isPressOnTower) {
+                    canvas.drawBitmap(UpdateBitmap.liangDu(button_1, 0.4f), button_0.getWidth()*2+Constants.BUTTON_TOWER_POSITION_X*3,
                             Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
                     pao1Click = false;
                 }
@@ -172,6 +203,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         score.drawSelf(canvas,paint,1);
         score.drawSelf(canvas,paint,3);
 
+        if(isPressOnTower){  //点击塔操作
+            if(canUpgrade){
+                canvas.drawBitmap(towerUpgrade,3*Constants.PMX/5,
+                        Constants.PMY - towerUpgrade.getHeight(),paint);
+            }else {         //不满足升级条件，控件低亮度显示
+                canvas.drawBitmap(UpdateBitmap.liangDu(towerUpgrade,0.4f),3*Constants.PMX/5,
+                        Constants.PMY-towerUpgrade.getHeight(),paint);
+            }
+            canvas.drawBitmap(towerSell,2*Constants.PMX/5,
+                    Constants.PMY-towerUpgrade.getHeight(),paint);
+
+        }
+
         if(gameisover){
             canvas.drawBitmap(backBlack, 0,0, paint);
             canvas.drawBitmap(gameOver, 268,76, paint);
@@ -184,6 +228,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
 
+    }
+
+    public void pauseOrContinueThreads()
+    {
+        cm.pause = !cm.pause;
+        mrt.pause = !mrt.pause;
+        tft.pause = !tft.pause;
+    }
+
+    public void replay()
+    {
+        activity.replay();
     }
 
     //初始化格子
@@ -209,22 +265,30 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         background = BitmapFactory.decodeResource(this.getResources(), R.mipmap.backgroung);
         road = BitmapFactory.decodeResource(this.getResources(), R.mipmap.road);
         button_0 = BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.button_1);
+                R.mipmap.tower_button_1);
+        button_1 = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.tower_button_2);
+        button_2 = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.tower_button_3);
+
         tower1 = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.test_tower);
+        tower2 = BitmapFactory.decodeResource(this.getResources(),
                 R.mipmap.test_tower);
         master1 = BitmapFactory.decodeResource(this.getResources(), R.mipmap.monster1);
         creep_1 = BitmapFactory.decodeResource(this.getResources(),
                 R.mipmap.monster1);
         huiHe = BitmapFactory.decodeResource(this.getResources(), R.mipmap.huihe);
         deFen = BitmapFactory.decodeResource(this.getResources(), R.mipmap.defen);
-        backBlack = BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.backblack);
-        gameOver=BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.gameover);
-        levelScore = BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.guanqiadefen);
-        bulletShell=BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.bullet_shell);
+        backBlack = BitmapFactory.decodeResource(this.getResources(), R.mipmap.backblack);
+        gameOver=BitmapFactory.decodeResource(this.getResources(), R.mipmap.gameover);
+        levelScore = BitmapFactory.decodeResource(this.getResources(), R.mipmap.guanqiadefen);
+        bulletShell=BitmapFactory.decodeResource(this.getResources(), R.mipmap.bullet_shell);
+        towerSell=BitmapFactory.decodeResource(this.getResources(), R.mipmap.sell);
+        towerUpgrade = BitmapFactory.decodeResource(this.getResources(),R.mipmap.update);
+        pause = BitmapFactory.decodeResource(this.getResources(),R.mipmap.replay);
+        continuePlay = BitmapFactory.decodeResource(this.getResources(),R.mipmap.pause);
+
         game = new Game(this);
         master_list = new MonsterList(this);
         tower_list = new TowerList();
