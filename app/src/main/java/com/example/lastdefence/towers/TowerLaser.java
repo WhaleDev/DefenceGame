@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
-import com.example.lastdefence.allActivity.MainGameActivity;
 import com.example.lastdefence.bullet.BulletArrow;
 import com.example.lastdefence.bullet.BulletList;
 import com.example.lastdefence.constant.Constants;
@@ -16,13 +15,16 @@ import com.example.lastdefence.view.GameView;
 
 import java.util.ArrayList;
 
-public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，用于传递对象
+/**
+ * Created by whale on 2019-09-10 21:53
+ */
+public class TowerLaser implements Tower { //实现接口序列化箭塔对象，用于传递对象
     private boolean flag = true;
     private int currentPrice = Constants.TOWER1CURRENTPRICE[0];
     private float x;
     private float y;//塔的中心点坐标
     private float shotR=Constants.TOWER1_R[0];
-    private   Bitmap bitmap;
+    private Bitmap bitmap;
     GameView mv;
     Paint paint;
     public ArrayList<Monster> monster_list;
@@ -36,7 +38,7 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
     //升级塔是播放动画的标志位
     private boolean playDongHua = false;
     private float shanXingAngle = 0;
-    public TowerArrow(float x, float y, Bitmap bitmap, GameView mv) {
+    public TowerLaser(float x, float y, Bitmap bitmap, GameView mv) {
         super();
         this.x = x;
         this.y = y;
@@ -49,13 +51,13 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
     }
     @Override
     public void draw(Canvas canvas){
-            Matrix m1=new Matrix();
-            m1.setTranslate(x-bitmap.getWidth()/2,y-bitmap.getHeight()/2);
-            m1.preRotate(yAngle, bitmap.getWidth()/2, bitmap.getHeight()/2);
-            canvas.drawBitmap(bitmap, m1,null);
-            bulletList.draw(canvas);
+        Matrix m1=new Matrix();
+        m1.setTranslate(x-bitmap.getWidth()/2,y-bitmap.getHeight()/2);
+        m1.preRotate(yAngle, bitmap.getWidth()/2, bitmap.getHeight()/2);
+        canvas.drawBitmap(bitmap, m1,null);
+        bulletList.draw(canvas);
 
-   }
+    }
     //返回塔的中心点坐标
     @Override
     public float[] getXY() {
@@ -99,7 +101,7 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
         if(bulletList.size()==0)///&&bulletList.size()==0
         {
             //如果在升级过程中不能发射炮弹
-                 fire(m);
+            fire(m);
         }
 
     }
@@ -243,11 +245,11 @@ public class TowerArrow implements Tower{ //实现接口序列化箭塔对象，
 
     @Override
     public void sell() {
-        mv.coin += Constants.TOWER1CURRENTPRICE[currentState-1];
+        mv.coin += Constants.TOWER2CURRENTPRICE[currentState-1];
     }
 
     @Override
     public int getCurrentUpdatePrice() {
-        return Constants.UPDATETOWER1[currentState];
+        return Constants.UPDATETOWER2[currentState];
     }
 }

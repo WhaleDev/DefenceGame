@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -272,9 +273,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 R.mipmap.tower_button_3);
 
         tower1 = BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.test_tower);
+                R.mipmap.tower1);
         tower2 = BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.test_tower);
+                R.mipmap.tower2);
+        tower3 = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.tower3);
         master1 = BitmapFactory.decodeResource(this.getResources(), R.mipmap.monster1);
         creep_1 = BitmapFactory.decodeResource(this.getResources(),
                 R.mipmap.monster1);

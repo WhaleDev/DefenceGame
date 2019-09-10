@@ -10,6 +10,8 @@ import com.example.lastdefence.constant.Constants;
 import com.example.lastdefence.constant.Map;
 import com.example.lastdefence.impleClass.Tower;
 import com.example.lastdefence.threads.BulletRunThread;
+import com.example.lastdefence.towers.TowerCannon;
+import com.example.lastdefence.towers.TowerLaser;
 import com.example.lastdefence.towers.TowerList;
 import com.example.lastdefence.towers.TowerArrow;
 import com.example.lastdefence.view.GameView;
@@ -102,7 +104,7 @@ public class TowerAdd {
                     position_botton[1]=event.getY()/Constants.RADIO-Constants.LOY;
                     move_Button[0]=event.getX();
                     move_Button[1]=event.getY();
-                    tower_draw = 1;
+                    tower_draw = 2;
                 } //第三座塔
                 if (!mv.cm.pause
                         && x<((Constants.BUTTON_TOWER_POSITION_X+Constants.BUTTON_TOWER_LENGTH)*3*Constants.RADIO+Constants.LOX)
@@ -119,7 +121,7 @@ public class TowerAdd {
                     position_botton[1]=event.getY()/Constants.RADIO-Constants.LOY;
                     move_Button[0]=event.getX();
                     move_Button[1]=event.getY();
-                    tower_draw = 1;
+                    tower_draw = 3;
                 }
                 /*
                  *塔售卖
@@ -232,6 +234,22 @@ public class TowerAdd {
                                     mv.coin -= Constants.PUTTOWER1CONSUMECOIN;
                                     setCurrentMap(temp[0], temp[1]);
                                 }
+                                break;
+                            case 2:
+                                if(mv.coin >= Constants.PUTTOWER2CONSUMECOIN){
+                                    tower_list.add(new TowerLaser(temp1[0], temp1[1],  tower2, mv));
+                                    mv.coin -= Constants.PUTTOWER2CONSUMECOIN;
+                                    setCurrentMap(temp[0], temp[1]);
+                                }
+
+                                break;
+                            case 3:
+                                if(mv.coin >= Constants.PUTTOWER3CONSUMECOIN){
+                                    tower_list.add(new TowerCannon(temp1[0], temp1[1],  tower3, mv));
+                                    mv.coin -= Constants.PUTTOWER3CONSUMECOIN;
+                                    setCurrentMap(temp[0], temp[1]);
+                                }
+
                                 break;
 
                         }
