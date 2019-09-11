@@ -66,6 +66,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public Bitmap creep_3;
     Bitmap background;
     Bitmap road;
+    Bitmap addPlace;
     Bitmap start;
     Bitmap end;
     Bitmap red_put;
@@ -95,7 +96,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public Bitmap towerUpgrade;
     public Bitmap pause;         //点击游戏暂停
     public Bitmap continuePlay;  //点击继续游戏
-
 
 
     public boolean pao1Click = true;  //炮1按钮处在可点击状态
@@ -169,29 +169,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
             if (coin >= Constants.PUTTOWER2CONSUMECOIN && !isPressOnTower) {
-                canvas.drawBitmap(button_1, button_0.getWidth()+Constants.BUTTON_TOWER_POSITION_X*2, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
+                canvas.drawBitmap(button_1, button_0.getWidth() + Constants.BUTTON_TOWER_POSITION_X * 2, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
                 pao1Click = true;
             } else {
                 if (!isPressOnTower) {
-                    canvas.drawBitmap(UpdateBitmap.liangDu(button_1, 0.4f), button_0.getWidth()+Constants.BUTTON_TOWER_POSITION_X*2,
+                    canvas.drawBitmap(UpdateBitmap.liangDu(button_1, 0.4f), button_0.getWidth() + Constants.BUTTON_TOWER_POSITION_X * 2,
                             Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
                     pao1Click = false;
                 }
             }
 
             if (coin >= Constants.PUTTOWER3CONSUMECOIN && !isPressOnTower) {
-                canvas.drawBitmap(button_2, button_0.getWidth()*2+Constants.BUTTON_TOWER_POSITION_X*3, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
+                canvas.drawBitmap(button_2, button_0.getWidth() * 2 + Constants.BUTTON_TOWER_POSITION_X * 3, Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
                 pao1Click = true;
             } else {
                 if (!isPressOnTower) {
-                    canvas.drawBitmap(UpdateBitmap.liangDu(button_1, 0.4f), button_0.getWidth()*2+Constants.BUTTON_TOWER_POSITION_X*3,
+                    canvas.drawBitmap(UpdateBitmap.liangDu(button_1, 0.4f), button_0.getWidth() * 2 + Constants.BUTTON_TOWER_POSITION_X * 3,
                             Constants.PMY - Constants.BUTTON_TOWER_LENGTH, paint);
                     pao1Click = false;
                 }
             }
 
         }
-        if(life<=0&&dmt!=null&&mrt!=null&&tft!=null){
+        if (life <= 0 && dmt != null && mrt != null && tft != null) {
             dmt.setFlag(false);
             mrt.setFlag(false);
             tft.setFlag(false);
@@ -200,28 +200,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setStyle(Style.STROKE);
         canvas.drawBitmap(huiHe, Constants.PMX / 2 - 70, 0, paint);
         canvas.drawBitmap(deFen, 0, 0, paint);
-        score.drawSelf(canvas,paint,2);
-        score.drawSelf(canvas,paint,1);
-        score.drawSelf(canvas,paint,3);
+        score.drawSelf(canvas, paint, 2);
+        score.drawSelf(canvas, paint, 1);
+        score.drawSelf(canvas, paint, 3);
 
-        if(isPressOnTower){  //点击塔操作
-            if(canUpgrade){
-                canvas.drawBitmap(towerUpgrade,3*Constants.PMX/5,
-                        Constants.PMY - towerUpgrade.getHeight(),paint);
-            }else {         //不满足升级条件，控件低亮度显示
-                canvas.drawBitmap(UpdateBitmap.liangDu(towerUpgrade,0.4f),3*Constants.PMX/5,
-                        Constants.PMY-towerUpgrade.getHeight(),paint);
+        if (isPressOnTower) {  //点击塔操作
+            if (canUpgrade) {
+                canvas.drawBitmap(towerUpgrade, 3 * Constants.PMX / 5,
+                        Constants.PMY - towerUpgrade.getHeight(), paint);
+            } else {         //不满足升级条件，控件低亮度显示
+                canvas.drawBitmap(UpdateBitmap.liangDu(towerUpgrade, 0.4f), 3 * Constants.PMX / 5,
+                        Constants.PMY - towerUpgrade.getHeight(), paint);
             }
-            canvas.drawBitmap(towerSell,2*Constants.PMX/5,
-                    Constants.PMY-towerUpgrade.getHeight(),paint);
+            canvas.drawBitmap(towerSell, 2 * Constants.PMX / 5,
+                    Constants.PMY - towerUpgrade.getHeight(), paint);
 
         }
 
-        if(gameisover){
-            canvas.drawBitmap(backBlack, 0,0, paint);
-            canvas.drawBitmap(gameOver, 268,76, paint);
-            canvas.drawBitmap(levelScore, 268,76+gameOver.getHeight()+20, paint);
-            score.drawSelf(canvas,paint,4);
+        if (gameisover) {
+            canvas.drawBitmap(backBlack, 0, 0, paint);
+            canvas.drawBitmap(gameOver, 268, 76, paint);
+            canvas.drawBitmap(levelScore, 268, 76 + gameOver.getHeight() + 20, paint);
+            score.drawSelf(canvas, paint, 4);
         }
 
         canvas.restore();
@@ -231,15 +231,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    public void pauseOrContinueThreads()
-    {
+    public void pauseOrContinueThreads() {
         cm.pause = !cm.pause;
         mrt.pause = !mrt.pause;
         tft.pause = !tft.pause;
     }
 
-    public void replay()
-    {
+    public void replay() {
         activity.replay();
     }
 
@@ -265,6 +263,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         background = BitmapFactory.decodeResource(this.getResources(), R.mipmap.backgroung);
         road = BitmapFactory.decodeResource(this.getResources(), R.mipmap.road);
+        addPlace = BitmapFactory.decodeResource(this.getResources(), R.mipmap.add_place);
         button_0 = BitmapFactory.decodeResource(this.getResources(),
                 R.mipmap.tower_button_1);
         button_1 = BitmapFactory.decodeResource(this.getResources(),
@@ -284,22 +283,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         huiHe = BitmapFactory.decodeResource(this.getResources(), R.mipmap.huihe);
         deFen = BitmapFactory.decodeResource(this.getResources(), R.mipmap.defen);
         backBlack = BitmapFactory.decodeResource(this.getResources(), R.mipmap.backblack);
-        gameOver=BitmapFactory.decodeResource(this.getResources(), R.mipmap.gameover);
+        gameOver = BitmapFactory.decodeResource(this.getResources(), R.mipmap.gameover);
         levelScore = BitmapFactory.decodeResource(this.getResources(), R.mipmap.guanqiadefen);
-        bulletShell=BitmapFactory.decodeResource(this.getResources(), R.mipmap.bullet_shell);
-        towerSell=BitmapFactory.decodeResource(this.getResources(), R.mipmap.sell);
-        towerUpgrade = BitmapFactory.decodeResource(this.getResources(),R.mipmap.update);
-        pause = BitmapFactory.decodeResource(this.getResources(),R.mipmap.replay);
-        continuePlay = BitmapFactory.decodeResource(this.getResources(),R.mipmap.pause);
+        bulletShell = BitmapFactory.decodeResource(this.getResources(), R.mipmap.bullet_shell);
+        towerSell = BitmapFactory.decodeResource(this.getResources(), R.mipmap.sell);
+        towerUpgrade = BitmapFactory.decodeResource(this.getResources(), R.mipmap.update);
+        pause = BitmapFactory.decodeResource(this.getResources(), R.mipmap.replay);
+        continuePlay = BitmapFactory.decodeResource(this.getResources(), R.mipmap.pause);
 
         game = new Game(this);
         master_list = new MonsterList(this);
         tower_list = new TowerList();
-        lbx = new LBX(road, this);
+        lbx = new LBX(road, addPlace,this);
         tft = new BulletRunThread(tower_list);
         ta = new TowerAdd(this);
 
-        score = new Score(this)	;
+        score = new Score(this);
 
         if (this.boshu % 3 == 1)
             cm = new CreateMonster(master_list, this, creep_1);
@@ -310,7 +309,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         cm.start();
         boShuCount = Constants.MASTER_COUNT;
-
 
 
         mrt = new MonsterRunThread(this);

@@ -281,15 +281,21 @@ public class TowerAdd {
         switch (tower_draw){
             case 0: break;
             case 1:
-                canvas.drawBitmap(Bitmap.createBitmap(tower1, 0, 0, 48, 48),
-                        move_Button[0]-Bitmap.createBitmap(tower1, 0, 0, 48, 48).getWidth()/2,
-                        move_Button[1]-Bitmap.createBitmap(tower1, 0, 0, 48, 48).getHeight()/2, paint);
+                canvas.drawBitmap(Bitmap.createBitmap(tower1, 0, 0, tower1.getWidth(), tower1.getHeight()),
+                        move_Button[0]-Bitmap.createBitmap(tower1, 0, 0, tower1.getWidth(), tower1.getHeight()).getWidth()/2,
+                        move_Button[1]-Bitmap.createBitmap(tower1, 0, 0, tower1.getWidth(), tower1.getHeight()).getHeight()/2, paint);
                 break;
             case 2:
-                canvas.drawBitmap(Bitmap.createBitmap(tower2, 0, 0, 48, 48),
-                        move_Button[0]-Bitmap.createBitmap(tower2, 0, 0, 48, 48).getWidth()/2,
-                        move_Button[1]-Bitmap.createBitmap(tower2, 0, 0, 48, 48).getHeight()/2, paint);
+                canvas.drawBitmap(Bitmap.createBitmap(tower2, 0, 0, tower2.getWidth(), tower2.getHeight()),
+                        move_Button[0]-Bitmap.createBitmap(tower2, 0, 0, tower2.getWidth(), tower2.getHeight()).getWidth()/2,
+                        move_Button[1]-Bitmap.createBitmap(tower2, 0, 0, tower2.getWidth(), tower2.getHeight()).getHeight()/2, paint);
                 break;
+            case 3:
+                canvas.drawBitmap(Bitmap.createBitmap(tower3, 0, 0, tower3.getWidth(), tower3.getHeight()),
+                        move_Button[0]-Bitmap.createBitmap(tower3, 0, 0, tower3.getWidth(), tower3.getHeight()).getWidth()/2,
+                        move_Button[1]-Bitmap.createBitmap(tower3, 0, 0, tower3.getWidth(), tower3.getHeight()).getHeight()/2, paint);
+                break;
+
         }
 
         //绘制我们点击的炮周围的圆形

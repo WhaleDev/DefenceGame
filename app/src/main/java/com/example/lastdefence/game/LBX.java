@@ -22,6 +22,7 @@ public class LBX {
     GameView mv;
     Path mPatha = new Path();               //Path类可在View上将N个点连成一条“路径”，然后调路径绘制图形
     Bitmap road;                           //路径图片
+    Bitmap addPlace;
 
     Bitmap start_bit;
     Bitmap end_bit;                         //目标点图片
@@ -33,8 +34,8 @@ public class LBX {
 
 
 
-    public LBX(Bitmap black,GameView mv){
-        Init(black,mv);
+    public LBX(Bitmap road,Bitmap addPlace,GameView mv){
+        Init(road,addPlace,mv);
         PositionInit();
         InitLBX();
     }
@@ -54,7 +55,7 @@ public class LBX {
     /**
      * 成员变量的初始化
      */
-    public void Init(Bitmap road,GameView mv){
+    public void Init(Bitmap road,Bitmap addPlace,GameView mv){
         this.mv = mv;
         mapNum = mv.mapNum;
         start = mv.game.source;
@@ -62,6 +63,7 @@ public class LBX {
         start_bit = mv.getLBXBit()[1];
         end_bit = mv.getLBXBit()[2];
         this.road = road;
+        this.addPlace = addPlace;
 
     }
 
@@ -95,6 +97,7 @@ public class LBX {
                         ||MAP_DATA[mapNum][row][col]==3||MAP_DATA[mapNum][row][col]==4
                         ||MAP_DATA[mapNum][row][col]==5)
                     canvas.drawBitmap(road, temp[0]-road.getWidth()/2, temp[1]-road.getHeight()/2, paint);
+                if(MAP_DATA[mapNum][row][col]==0) canvas.drawBitmap(addPlace,temp[0]-addPlace.getWidth()/2, temp[1]-addPlace.getHeight()/2, paint);
 
             }
         }
